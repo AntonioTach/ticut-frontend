@@ -1,25 +1,42 @@
+import { FaHouse, FaUsers, FaCalendarDays } from 'react-icons/fa6';
 export const sidebarLinks = [
   {
-    imgURL: '/icons/home.svg',
-    route: '/',
-    label: 'Home',
+    path: '/dashboard',
+    icon: <FaHouse size={20} />,
+    title: 'Dashboard',
+    subTitle: 'Panel de control'
   },
   {
-    imgURL: '/icons/dollar-circle.svg',
-    route: '/my-banks',
-    label: 'My Banks',
+    path: '/clients',
+    icon: <FaUsers size={20} />,
+    title: 'Clientes',
+    subTitle: 'Maneja tus clientes'
   },
   {
-    imgURL: '/icons/transaction.svg',
-    route: '/transaction-history',
-    label: 'Transaction History',
+    path: '/appointments',
+    icon: <FaCalendarDays size={20} />,
+    title: 'Citas',
+    subTitle: 'Gestiona tus citas'
   },
   {
-    imgURL: '/icons/money-send.svg',
-    route: '/payment-transfer',
-    label: 'Transfer Funds',
+    path: '/services',
+    icon: <FaCalendarDays size={20} />,
+    title: 'Servicios',
+    subTitle: 'Administra tus servicios'
   },
-]
+  {
+    path: '/barbers',
+    icon: <FaUsers size={20} />,
+    title: 'Barberos',
+    subTitle: 'Gestiona tus barberos'
+  },
+  {
+    path: '/promotions',
+    icon: <FaUsers size={20} />,
+    title: 'Promociones',
+    subTitle: 'Gestiona tus promociones'
+  }
+];
 
 export const topCategoryStyles = {
   'Food and Drink': {
