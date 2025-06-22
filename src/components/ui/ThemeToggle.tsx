@@ -9,13 +9,26 @@ interface ThemeToggleProps {
 }
 
 export const ThemeToggle = ({ variant = 'sidebar', className = '' }: ThemeToggleProps) => {
-  const { resolvedTheme, toggleTheme } = useTheme()
+  const { resolvedTheme, toggleTheme, mounted } = useTheme()
 
   const baseClasses = "p-2 rounded-lg transition-all duration-200"
   
   const variantClasses = {
     sidebar: "text-gray-400 hover:text-white hover:bg-gray-700",
     header: "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700"
+  }
+
+  // Don't render theme-dependent content until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <button
+        className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+        aria-label="Toggle theme"
+        disabled
+      >
+        <div className="w-[18px] h-[18px]" />
+      </button>
+    )
   }
 
   return (

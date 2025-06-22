@@ -8,6 +8,7 @@ interface ThemeContextType {
   setTheme: (theme: Theme) => void
   resolvedTheme: 'light' | 'dark'
   toggleTheme: () => void
+  mounted: boolean
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -15,17 +16,27 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<Theme>('system')
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light')
+  const [mounted, setMounted] = useState(false)
+
+  // Track when component is mounted
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Get initial theme from localStorage or system preference
   useEffect(() => {
+    if (!mounted) return
+    
     const savedTheme = localStorage.getItem('theme') as Theme
     if (savedTheme) {
       setTheme(savedTheme)
     }
-  }, [])
+  }, [mounted])
 
   // Resolve theme based on system preference
   useEffect(() => {
+    if (!mounted) return
+    
     const resolveTheme = () => {
       if (theme === 'system') {
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
@@ -45,19 +56,23 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [theme])
+  }, [theme, mounted])
 
   // Apply theme to document
   useEffect(() => {
+    if (!mounted) return
+    
     const root = document.documentElement
     root.classList.remove('light', 'dark')
     root.classList.add(resolvedTheme)
-  }, [resolvedTheme])
+  }, [resolvedTheme, mounted])
 
   // Save theme to localStorage
   const handleSetTheme = (newTheme: Theme) => {
     setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
+    if (mounted) {
+      localStorage.setItem('theme', newTheme)
+    }
   }
 
   const toggleTheme = () => {
@@ -70,7 +85,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       theme,
       setTheme: handleSetTheme,
       resolvedTheme,
-      toggleTheme
+      toggleTheme,
+      mounted
     }}>
       {children}
     </ThemeContext.Provider>

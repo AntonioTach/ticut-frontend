@@ -70,7 +70,6 @@ export function RecentAppointments() {
             <div className="p-2 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 rounded-xl shadow-lg">
               <Calendar className="h-5 w-5 text-white" />
             </div>
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
           </div>
           Citas Recientes
         </CardTitle>

@@ -66,7 +66,6 @@ export function AdditionalStats() {
             <div className="p-2 bg-gradient-to-r from-indigo-500 via-indigo-600 to-indigo-700 rounded-xl shadow-lg">
               <TrendingUp className="h-5 w-5 text-white" />
             </div>
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
           </div>
           Métricas de Rendimiento
         </CardTitle>
