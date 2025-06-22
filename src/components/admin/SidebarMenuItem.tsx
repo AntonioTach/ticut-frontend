@@ -22,7 +22,7 @@ export const SidebarMenuItem = ({ path, icon, title, subTitle, onClick }: Sideba
       className={`group relative flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-200 ease-in-out ${
         isActive 
           ? 'bg-blue-600/20 text-blue-400 border-l-4 border-l-blue-400 shadow-lg' 
-          : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
+          : 'text-gray-300 hover:bg-gray-700/50 hover:text-white dark:text-gray-400 dark:hover:bg-gray-600/50 dark:hover:text-white'
       }`}
       onClick={onClick}
     >
@@ -35,7 +35,7 @@ export const SidebarMenuItem = ({ path, icon, title, subTitle, onClick }: Sideba
       <div className={`flex-shrink-0 p-2 rounded-lg transition-all duration-200 ${
         isActive 
           ? 'bg-blue-600/30 text-blue-400' 
-          : 'text-gray-400 group-hover:text-white group-hover:bg-gray-600/30'
+          : 'text-gray-400 group-hover:text-white group-hover:bg-gray-600/30 dark:text-gray-500 dark:group-hover:text-white dark:group-hover:bg-gray-500/30'
       }`}>
         {icon}
       </div>
@@ -43,13 +43,13 @@ export const SidebarMenuItem = ({ path, icon, title, subTitle, onClick }: Sideba
       {/* Content */}
       <div className="flex flex-col min-w-0 flex-1">
         <span className={`text-sm font-medium leading-5 truncate ${
-          isActive ? 'text-blue-400' : 'text-gray-300 group-hover:text-white'
+          isActive ? 'text-blue-400' : 'text-gray-300 group-hover:text-white dark:text-gray-400 dark:group-hover:text-white'
         }`}>
           {title}
         </span>
         {subTitle && (
           <span className={`text-xs truncate ${
-            isActive ? 'text-blue-300/70' : 'text-gray-500 group-hover:text-gray-300'
+            isActive ? 'text-blue-300/70' : 'text-gray-500 group-hover:text-gray-300 dark:text-gray-500 dark:group-hover:text-gray-300'
           }`}>
             {subTitle}
           </span>
@@ -60,7 +60,7 @@ export const SidebarMenuItem = ({ path, icon, title, subTitle, onClick }: Sideba
       <div className={`absolute inset-0 rounded-lg transition-all duration-200 ${
         isActive 
           ? 'bg-blue-600/10' 
-          : 'bg-transparent group-hover:bg-gray-600/20'
+          : 'bg-transparent group-hover:bg-gray-600/20 dark:group-hover:bg-gray-500/20'
       }`}></div>
     </Link>
   )
