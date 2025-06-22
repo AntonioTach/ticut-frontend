@@ -3,14 +3,15 @@ import {
   RevenueChart, 
   AppointmentsChart, 
   RecentAppointments, 
-  TopServices 
+  TopServices,
+  QuickActions,
+  AdditionalStats
 } from "@/components/dashboard";
 import { 
   DollarSign, 
   Users, 
-  Calendar, 
-  Scissors,
-  Clock
+  Calendar,
+  BarChart3
 } from "lucide-react";
 
 export default function DashboardPage() {
@@ -24,48 +25,71 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex items-center space-x-2">
-          <Clock className="h-4 w-4 text-muted-foreground" />
           <span className="text-sm text-muted-foreground">
             Última actualización: {new Date().toLocaleString('es-ES')}
           </span>
         </div>
       </div>
       
-      {/* Stats Cards */}
+      {/* Stats Cards + Quick Actions */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatsCard
           title="Ingresos del Mes"
           value="$12,450"
           description="+20.1% vs mes anterior"
+          secondaryValue="$8,230"
+          secondaryLabel="Promedio mensual"
           icon={DollarSign}
           trend={{ value: 20.1, isPositive: true }}
           color="green"
+          action={{
+            label: "Ver Reportes",
+            href: "/reports",
+            icon: BarChart3
+          }}
+          showViewButton={true}
         />
         <StatsCard
           title="Citas Totales"
           value="156"
           description="+12% vs mes anterior"
+          secondaryValue="23"
+          secondaryLabel="Esta semana"
           icon={Calendar}
           trend={{ value: 12, isPositive: true }}
           color="blue"
+          action={{
+            label: "Ver Citas",
+            href: "/appointments",
+            icon: Calendar
+          }}
+          showViewButton={true}
         />
         <StatsCard
           title="Clientes Activos"
           value="89"
           description="+5.2% vs mes anterior"
+          secondaryValue="12"
+          secondaryLabel="Nuevos este mes"
           icon={Users}
           trend={{ value: 5.2, isPositive: true }}
           color="orange"
+          action={{
+            label: "Ver Clientes",
+            href: "/clients",
+            icon: Users
+          }}
+          showViewButton={true}
         />
-        <StatsCard
-          title="Servicios Realizados"
-          value="234"
-          description="+8.1% vs mes anterior"
-          icon={Scissors}
-          trend={{ value: 8.1, isPositive: true }}
-          color="red"
-        />
+        <QuickActions />
       </div>
+
+      {/* Additional Stats */}
+      {/* TODO: Consider if AdditionalStats component adds value to dashboard
+          - Evaluate if it provides unique insights not covered by other components
+          - Check if it improves user experience and decision-making
+          - Consider removing if it's redundant with existing stats cards */}
+      <AdditionalStats />
 
       {/* Charts Row */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">

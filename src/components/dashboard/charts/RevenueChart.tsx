@@ -35,11 +35,21 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
 
 export function RevenueChart() {
   return (
-    <Card className="col-span-4 hover:shadow-md transition-shadow duration-200">
+    <Card className="col-span-4 hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-semibold">Ingresos Mensuales</CardTitle>
+        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+          <div className="relative">
+            <div className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 rounded-xl shadow-lg">
+              <DollarSign className="h-5 w-5 text-white" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
+          </div>
+          Ingresos Mensuales
+        </CardTitle>
         <div className="flex items-center space-x-2">
-          <DollarSign className="h-4 w-4 text-green-600" />
+          <div className="p-1.5 bg-green-100 dark:bg-green-900/30 rounded-lg">
+            <DollarSign className="h-4 w-4 text-green-600 dark:text-green-400" />
+          </div>
           <span className="text-sm text-muted-foreground">+12.5% vs mes anterior</span>
         </div>
       </CardHeader>

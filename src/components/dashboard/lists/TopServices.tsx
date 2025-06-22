@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Scissors, DollarSign } from "lucide-react";
+import { Scissors, DollarSign, TrendingUp } from "lucide-react";
 
 const topServices = [
   {
@@ -46,11 +46,21 @@ export function TopServices() {
   const totalRevenue = topServices.reduce((sum, service) => sum + service.revenue, 0);
   
   return (
-    <Card className="col-span-4 hover:shadow-md transition-shadow duration-200">
+    <Card className="col-span-4 hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-lg font-semibold">Servicios Más Populares</CardTitle>
+        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+          <div className="relative">
+            <div className="p-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-xl shadow-lg">
+              <Scissors className="h-5 w-5 text-white" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
+          </div>
+          Servicios Más Populares
+        </CardTitle>
         <div className="flex items-center space-x-2">
-          <DollarSign className="h-4 w-4 text-green-600" />
+          <div className="p-1.5 bg-green-100 dark:bg-green-900/30 rounded-lg">
+            <DollarSign className="h-4 w-4 text-green-600 dark:text-green-400" />
+          </div>
           <span className="text-sm text-muted-foreground">
             Total: ${totalRevenue.toLocaleString()}
           </span>
@@ -59,23 +69,31 @@ export function TopServices() {
       <CardContent>
         <div className="space-y-6">
           {topServices.map((service, index) => (
-            <div key={index} className="space-y-3">
+            <div key={index} className="space-y-3 group">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <Scissors className="h-4 w-4 text-blue-600" />
+                  <div className="relative p-2 bg-blue-50 dark:bg-blue-950/30 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <div className="p-1.5 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-lg shadow-sm">
+                      <Scissors className="h-3 w-3 text-white" />
+                    </div>
+                    <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-white rounded-full opacity-80"></div>
                   </div>
                   <div>
                     <span className="text-sm font-medium">{service.name}</span>
                     <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                       <span>{service.count} citas</span>
                       <span>•</span>
-                      <span className="text-green-600 font-medium">{service.trend}</span>
+                      <div className="flex items-center gap-1">
+                        <div className="p-0.5 bg-green-100 dark:bg-green-900/30 rounded-full">
+                          <TrendingUp className="h-2.5 w-2.5 text-green-600 dark:text-green-400" />
+                        </div>
+                        <span className="text-green-600 dark:text-green-400 font-medium">{service.trend}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm font-semibold text-green-600">
+                  <div className="text-sm font-semibold text-green-600 dark:text-green-400">
                     ${service.revenue.toLocaleString()}
                   </div>
                   <div className="text-xs text-muted-foreground">

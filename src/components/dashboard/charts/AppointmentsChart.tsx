@@ -37,11 +37,21 @@ export function AppointmentsChart() {
   const totalCitas = data.reduce((sum, item) => sum + item.citas, 0);
 
   return (
-    <Card className="col-span-3 hover:shadow-md transition-shadow duration-200">
+    <Card className="col-span-3 hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-semibold">Citas por Día de la Semana</CardTitle>
+        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+          <div className="relative">
+            <div className="p-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-xl shadow-lg">
+              <Calendar className="h-5 w-5 text-white" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
+          </div>
+          Citas por Día de la Semana
+        </CardTitle>
         <div className="flex items-center space-x-2">
-          <Calendar className="h-4 w-4 text-blue-600" />
+          <div className="p-1.5 bg-blue-100 dark:bg-blue-950/30 rounded-lg">
+            <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+          </div>
           <span className="text-sm text-muted-foreground">
             {totalCitas} citas esta semana
           </span>
