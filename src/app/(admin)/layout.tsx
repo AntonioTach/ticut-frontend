@@ -1,5 +1,4 @@
 import { Sidebar } from "@/src/components/admin/Sidebar";
-import Image from "next/image";
 
 export default function AdminLayout({
   children,
@@ -7,14 +6,12 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-slate-100 overflow-y-scroll w-screen h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white">
-      <div className="flex">
-
+    <div className="w-screen h-screen bg-slate-100 text-slate-300 antialiased selection:bg-blue-600 selection:text-white">
+      <div className="flex h-full">
         <Sidebar />
 
-        <div className="p-2 w-full text-slate-900">
+        <div className="flex-1 h-full overflow-y-auto p-2 text-slate-900">
           {children}
-
         </div>
       </div>
     </div>
