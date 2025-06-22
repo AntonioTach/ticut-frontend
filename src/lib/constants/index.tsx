@@ -1,4 +1,4 @@
-import { FaHouse, FaUsers, FaCalendarDays } from 'react-icons/fa6';
+import { FaHouse, FaUsers, FaCalendarDays, FaScissors, FaUserTie, FaTags } from 'react-icons/fa6';
 export const sidebarLinks = [
   {
     path: '/dashboard',
@@ -20,19 +20,19 @@ export const sidebarLinks = [
   },
   {
     path: '/services',
-    icon: <FaCalendarDays size={20} />,
+    icon: <FaScissors size={20} />,
     title: 'Servicios',
     subTitle: 'Catálogo y precios'
   },
   {
     path: '/barbers',
-    icon: <FaUsers size={20} />,
+    icon: <FaUserTie size={20} />,
     title: 'Barberos',
     subTitle: 'Gestiona tu equipo de barberos'
   },
   {
     path: '/promotions',
-    icon: <FaUsers size={20} />,
+    icon: <FaTags size={20} />,
     title: 'Promociones',
     subTitle: 'Descuentos y ofertas'
   }
