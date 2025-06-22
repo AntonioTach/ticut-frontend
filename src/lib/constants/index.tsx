@@ -1,25 +1,42 @@
+import { FaHouse, FaUsers, FaCalendarDays, FaScissors, FaUserTie, FaTags } from 'react-icons/fa6';
 export const sidebarLinks = [
   {
-    imgURL: '/icons/home.svg',
-    route: '/',
-    label: 'Home',
+    path: '/dashboard',
+    icon: <FaHouse size={20} />,
+    title: 'Dashboard',
+    subTitle: 'Panel de control'
   },
   {
-    imgURL: '/icons/dollar-circle.svg',
-    route: '/my-banks',
-    label: 'My Banks',
+    path: '/clients',
+    icon: <FaUsers size={20} />,
+    title: 'Clientes',
+    subTitle: 'Historial y datos de clientes'
   },
   {
-    imgURL: '/icons/transaction.svg',
-    route: '/transaction-history',
-    label: 'Transaction History',
+    path: '/appointments',
+    icon: <FaCalendarDays size={20} />,
+    title: 'Citas',
+    subTitle: 'Agenda y horarios'
   },
   {
-    imgURL: '/icons/money-send.svg',
-    route: '/payment-transfer',
-    label: 'Transfer Funds',
+    path: '/services',
+    icon: <FaScissors size={20} />,
+    title: 'Servicios',
+    subTitle: 'Catálogo y precios'
   },
-]
+  {
+    path: '/barbers',
+    icon: <FaUserTie size={20} />,
+    title: 'Barberos',
+    subTitle: 'Gestiona tu equipo de barberos'
+  },
+  {
+    path: '/promotions',
+    icon: <FaTags size={20} />,
+    title: 'Promociones',
+    subTitle: 'Descuentos y ofertas'
+  }
+];
 
 export const topCategoryStyles = {
   'Food and Drink': {
@@ -101,7 +118,7 @@ export const transactionCategoryStyles = {
     chipBackgroundColor: 'bg-[#ECFDF3]',
   },
   default: {
-    borderColor: '',
+    borderColor: undefined,
     backgroundColor: 'bg-blue-500',
     textColor: 'text-blue-700',
     chipBackgroundColor: 'bg-inherit',
