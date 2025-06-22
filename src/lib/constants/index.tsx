@@ -10,31 +10,31 @@ export const sidebarLinks = [
     path: '/clients',
     icon: <FaUsers size={20} />,
     title: 'Clientes',
-    subTitle: 'Maneja tus clientes'
+    subTitle: 'Historial y datos de clientes'
   },
   {
     path: '/appointments',
     icon: <FaCalendarDays size={20} />,
     title: 'Citas',
-    subTitle: 'Gestiona tus citas'
+    subTitle: 'Agenda y horarios'
   },
   {
     path: '/services',
     icon: <FaCalendarDays size={20} />,
     title: 'Servicios',
-    subTitle: 'Administra tus servicios'
+    subTitle: 'Catálogo y precios'
   },
   {
     path: '/barbers',
     icon: <FaUsers size={20} />,
     title: 'Barberos',
-    subTitle: 'Gestiona tus barberos'
+    subTitle: 'Gestiona tu equipo de barberos'
   },
   {
     path: '/promotions',
     icon: <FaUsers size={20} />,
     title: 'Promociones',
-    subTitle: 'Gestiona tus promociones'
+    subTitle: 'Descuentos y ofertas'
   }
 ];
 
