@@ -53,7 +53,6 @@ export function TopServices() {
             <div className="p-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-xl shadow-lg">
               <Scissors className="h-5 w-5 text-white" />
             </div>
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
           </div>
           Servicios Más Populares
         </CardTitle>
@@ -76,7 +75,6 @@ export function TopServices() {
                     <div className="p-1.5 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-lg shadow-sm">
                       <Scissors className="h-3 w-3 text-white" />
                     </div>
-                    <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-white rounded-full opacity-80"></div>
                   </div>
                   <div>
                     <span className="text-sm font-medium">{service.name}</span>

@@ -42,7 +42,6 @@ export function RevenueChart() {
             <div className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 rounded-xl shadow-lg">
               <DollarSign className="h-5 w-5 text-white" />
             </div>
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
           </div>
           Ingresos Mensuales
         </CardTitle>

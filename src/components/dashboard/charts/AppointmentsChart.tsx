@@ -44,7 +44,6 @@ export function AppointmentsChart() {
             <div className="p-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-xl shadow-lg">
               <Calendar className="h-5 w-5 text-white" />
             </div>
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
           </div>
           Citas por Día de la Semana
         </CardTitle>

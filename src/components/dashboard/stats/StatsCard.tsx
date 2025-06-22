@@ -86,8 +86,6 @@ export function StatsCard({
           <div className={`p-1.5 rounded-lg ${colorClasses.iconBg} shadow-md`}>
             <Icon className="h-4 w-4 text-white" />
           </div>
-          {/* Decorative dot */}
-          <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-white rounded-full opacity-80"></div>
         </div>
       </CardHeader>
       
