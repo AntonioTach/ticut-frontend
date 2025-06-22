@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist_Mono, Inter } from 'next/font/google'
 import './globals.css'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
@@ -23,8 +24,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es">
-      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>{children}</body>
+    <html lang="es" suppressHydrationWarning>
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }
