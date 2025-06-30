@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Appointment, User } from './types';
+import { ClientRegistrationModal } from '../dashboard/ClientRegistrationModal';
 
 interface AppointmentModalProps {
   isOpen: boolean;
@@ -10,6 +11,24 @@ interface AppointmentModalProps {
   barbers: User[];
   currentUser: User;
 }
+
+const mockClients = [
+  { id: '1', name: 'Juan Pérez' },
+  { id: '2', name: 'Ana Gómez' },
+  { id: '3', name: 'Pedro Martínez' },
+  { id: '4', name: 'Lucía Fernández' },
+  { id: '5', name: 'Carlos Ramírez' },
+  { id: '6', name: 'María López' },
+  { id: '7', name: 'Sofía Torres' },
+  { id: '8', name: 'Miguel Sánchez' },
+  { id: '9', name: 'Valentina Castro' },
+  { id: '10', name: 'Diego Herrera' },
+  { id: '11', name: 'Camila Morales' },
+  { id: '12', name: 'Javier Ruiz' },
+  { id: '13', name: 'Paula Ortega' },
+  { id: '14', name: 'Andrés Navarro' },
+  { id: '15', name: 'Elena Gil' },
+];
 
 /**
  * Modal para crear o editar una cita (estilo original, simple)
@@ -33,6 +52,26 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       notes: '',
     }
   );
+
+  const [isClientModalOpen, setIsClientModalOpen] = useState<boolean>(false);
+  const [clientSearch, setClientSearch] = useState<string>('');
+  const [isClientListOpen, setIsClientListOpen] = useState<boolean>(false);
+
+  const filteredClients = clientSearch
+    ? mockClients.filter((client) =>
+        client.name.toLowerCase().includes(clientSearch.toLowerCase())
+      )
+    : mockClients.slice(0, 10);
+
+  const handleClientInputFocus = () => {
+    setIsClientListOpen(true);
+    setClientSearch('');
+  };
+
+  const handleClientInputBlur = () => {
+    // Timeout para permitir click en la lista
+    setTimeout(() => setIsClientListOpen(false), 120);
+  };
 
   useEffect(() => {
     if (initialData) setForm(initialData);
@@ -74,15 +113,66 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             required
             aria-label="Title"
           />
-          <input
-            name="clientName"
-            value={form.clientName}
-            onChange={handleChange}
-            placeholder="Client Name"
-            className="border rounded px-3 py-2"
-            required
-            aria-label="Client Name"
-          />
+          <div className="flex gap-2 items-start relative">
+            <div className="w-full">
+              <input
+                type="text"
+                name="clientName"
+                value={clientSearch || form.clientName}
+                onChange={(e) => {
+                  setClientSearch(e.target.value);
+                  setForm({ ...form, clientName: '' });
+                  setIsClientListOpen(true);
+                }}
+                placeholder="Search or select client"
+                className="border rounded px-3 py-2 w-full"
+                aria-label="Client Name"
+                autoComplete="off"
+                tabIndex={0}
+                onFocus={handleClientInputFocus}
+                onBlur={handleClientInputBlur}
+              />
+              {isClientListOpen && (
+                <ul className="absolute z-10 bg-white border rounded w-full mt-1 max-h-40 overflow-y-auto shadow-lg">
+                  {filteredClients.length > 0 ? (
+                    filteredClients.map((client) => (
+                      <li
+                        key={client.id}
+                        tabIndex={0}
+                        className="px-3 py-2 cursor-pointer hover:bg-blue-100"
+                        onClick={() => {
+                          setForm({ ...form, clientName: client.name });
+                          setClientSearch(client.name);
+                          setIsClientListOpen(false);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            setForm({ ...form, clientName: client.name });
+                            setClientSearch(client.name);
+                            setIsClientListOpen(false);
+                          }
+                        }}
+                        aria-label={`Select ${client.name}`}
+                      >
+                        {client.name}
+                      </li>
+                    ))
+                  ) : (
+                    <li className="px-3 py-2 text-gray-400">No clients found</li>
+                  )}
+                </ul>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsClientModalOpen(true)}
+              className="px-3 py-2 rounded group/btn flex items-center justify-between bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] border-0 relative overflow-hidden"
+              aria-label="Register New Client"
+              tabIndex={0}
+            >
+              +
+            </button>
+          </div>
           <input
             name="start"
             type="datetime-local"
@@ -130,6 +220,10 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           </div>
         </form>
       </div>
+      <ClientRegistrationModal
+        isOpen={isClientModalOpen}
+        onClose={() => setIsClientModalOpen(false)}
+      />
     </div>
   );
 };
