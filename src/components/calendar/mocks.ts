@@ -1192,3 +1192,21 @@ export const appointments: Appointment[] = [
     notes: 'Short fade',
   },
 ];
+
+export const mockClients = [
+  { id: '1', name: 'Juan Pérez' },
+  { id: '2', name: 'Ana Gómez' },
+  { id: '3', name: 'Pedro Martínez' },
+  { id: '4', name: 'Lucía Fernández' },
+  { id: '5', name: 'Carlos Ramírez' },
+  { id: '6', name: 'María López' },
+  { id: '7', name: 'Sofía Torres' },
+  { id: '8', name: 'Miguel Sánchez' },
+  { id: '9', name: 'Valentina Castro' },
+  { id: '10', name: 'Diego Herrera' },
+  { id: '11', name: 'Camila Morales' },
+  { id: '12', name: 'Javier Ruiz' },
+  { id: '13', name: 'Paula Ortega' },
+  { id: '14', name: 'Andrés Navarro' },
+  { id: '15', name: 'Elena Gil' },
+];

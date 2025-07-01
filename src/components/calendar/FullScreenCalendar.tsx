@@ -81,8 +81,14 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
 
   // Handler para abrir modal vacío (nuevo appointment)
   const handleOpenNewAppointment = () => {
-    setSelectedStart(null);
-    setSelectedEnd(null);
+    const now = new Date();
+    const end = new Date(now.getTime() + 60 * 60 * 1000);
+    const toLocalInputString = (date: Date) => {
+      const pad = (n: number) => n.toString().padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    };
+    setSelectedStart(toLocalInputString(now));
+    setSelectedEnd(toLocalInputString(end));
     setSelectedEvent(null);
     setModalOpen(true);
   };
@@ -97,11 +103,11 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
     <div className="w-[95vw] max-w-7xl h-[90vh] mx-auto my-8 bg-white rounded-2xl shadow-2xl p-4 flex flex-col">
       <div className="mb-4 flex items-center justify-end">
         <button
-          className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm font-medium shadow"
+          className="py-2 rounded group/btn h-10 flex items-center justify-between px-6 bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:from-green-600 hover:via-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] border-0 relative overflow-hidden"
           onClick={handleOpenNewAppointment}
-          aria-label="Nuevo Appointment"
+          aria-label="Nueva Cita"
         >
-          Nuevo Appointment
+          Nueva Cita
         </button>
       </div>
       <div className="flex-1 flex flex-col">
