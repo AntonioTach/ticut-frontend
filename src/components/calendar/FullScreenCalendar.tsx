@@ -33,10 +33,18 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
 }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [selectedEvent, setSelectedEvent] = React.useState<Appointment | null>(null);
-  const [selectedDate, setSelectedDate] = React.useState<string | null>(null);
+  const [selectedStart, setSelectedStart] = React.useState<string | null>(null);
+  const [selectedEnd, setSelectedEnd] = React.useState<string | null>(null);
 
   const handleDateClick = (arg: DateClickArg) => {
-    setSelectedDate(arg.dateStr);
+    const startDate = arg.date;
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // +1 hora
+    const toLocalInputString = (date: Date) => {
+      const pad = (n: number) => n.toString().padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    };
+    setSelectedStart(toLocalInputString(startDate));
+    setSelectedEnd(toLocalInputString(endDate));
     setSelectedEvent(null);
     setModalOpen(true);
   };
@@ -58,8 +66,44 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
     }
   };
 
+  // Función para abrir el modal en modo nuevo appointment en una fecha/hora específica
+  const handleCreateAt = (date: Date) => {
+    const endDate = new Date(date.getTime() + 60 * 60 * 1000); // +1 hora
+    const toLocalInputString = (date: Date) => {
+      const pad = (n: number) => n.toString().padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    };
+    setSelectedStart(toLocalInputString(date));
+    setSelectedEnd(toLocalInputString(endDate));
+    setSelectedEvent(null);
+    setModalOpen(true);
+  };
+
+  // Handler para abrir modal vacío (nuevo appointment)
+  const handleOpenNewAppointment = () => {
+    setSelectedStart(null);
+    setSelectedEnd(null);
+    setSelectedEvent(null);
+    setModalOpen(true);
+  };
+
+  // Handler para select (doble click o arrastrar)
+  const handleSelect = (arg: { start: Date; end: Date }) => {
+    // Usar la fecha de inicio seleccionada
+    handleCreateAt(arg.start);
+  };
+
   return (
     <div className="w-[95vw] max-w-7xl h-[90vh] mx-auto my-8 bg-white rounded-2xl shadow-2xl p-4 flex flex-col">
+      <div className="mb-4 flex items-center justify-end">
+        <button
+          className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm font-medium shadow"
+          onClick={handleOpenNewAppointment}
+          aria-label="Nuevo Appointment"
+        >
+          Nuevo Appointment
+        </button>
+      </div>
       <div className="flex-1 flex flex-col">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -78,6 +122,8 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
           }))}
           dateClick={handleDateClick}
           eventClick={handleEventClick}
+          selectable={true}
+          select={handleSelect}
           height="100%"
           slotMinTime={dayViewHours.start}
           slotMaxTime={dayViewHours.end}
@@ -89,11 +135,11 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onSave={handleSave}
-        initialData={selectedEvent || (selectedDate ? {
+        initialData={selectedEvent || (selectedStart && selectedEnd ? {
           id: '',
           title: '',
-          start: selectedDate + 'T09:00',
-          end: selectedDate + 'T09:30',
+          start: selectedStart,
+          end: selectedEnd,
           barberId: '',
           clientName: '',
           notes: '',
