@@ -1,32 +1,117 @@
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const isSignIn = pathname === '/sign-in'
+  const isSignUp = pathname === '/sign-up'
+
   return (
-    <main className="flex flex-col md:flex-row h-screen">
-      <section className="flex-1 flex items-center justify-center p-6 relative bg-[url('/images/background.webp')] bg-cover bg-center bg-no-repeat">
-        <div className="relative z-10 text-center">
-          <h1 className="text-4xl font-bold text-[primary] drop-shadow-lg mb-4 transition-transform duration-300 transform hover:scale-105">
-            Welcome Back to Barber Pro!
-          </h1>
-          <p className="text-lg text-[primary] drop-shadow-md transition-transform duration-300 transform hover:scale-105">
-            Transforming Barber Dreams into Reality
-          </p>
+    <main className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+      {/* Left Section - Branding */}
+      <section className="flex-1 flex items-center justify-center p-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 dark:from-blue-500/10 dark:to-purple-500/10"></div>
+        <div className="relative z-10 text-center max-w-md">
+          <div className="mb-8">
+            <img 
+              src="/icons/logo.svg" 
+              alt="Barber Pro Logo" 
+              className="w-16 h-16 mx-auto mb-4 drop-shadow-lg"
+            />
+            <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              Barber Pro
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+              Transform your barbershop dreams into reality with our comprehensive management platform
+            </p>
+          </div>
+          
+          {/* Feature highlights */}
+          <div className="space-y-4 text-left">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span className="text-slate-700 dark:text-slate-200">Smart appointment scheduling</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+              </div>
+              <span className="text-slate-700 dark:text-slate-200">Revenue tracking & analytics</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <span className="text-slate-700 dark:text-slate-200">Client management system</span>
+            </div>
+          </div>
         </div>
+        
+        {/* Decorative elements */}
+        <div className="absolute top-10 left-10 w-32 h-32 bg-blue-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-400/20 rounded-full blur-3xl"></div>
       </section>
 
-      <section className="flex-1 p-6 flex items-center justify-center">
-        <div className="relative isolate">
-          <div
-            className="absolute inset-x-0 top-1/4 -z-10 flex -translate-y-1/2 transform-gpu justify-center overflow-hidden blur-3xl sm:bottom-0 sm:right-[calc(50%-6rem)] sm:top-auto sm:translate-y-0 sm:transform-gpu sm:justify-end"
-            aria-hidden="true"
-          >
-            <div
-              className="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#80d3ff] to-[#fc89e9] opacity-25"
-              style={{
-                clipPath:
-                  'polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)',
-              }}
-            ></div>
+      {/* Right Section - Auth Form */}
+      <section className="flex-1 flex items-center justify-center p-6 lg:p-12">
+        <div className="w-full max-w-md">
+          {/* Navigation tabs */}
+          <div className="flex mb-8 bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+            <Link
+              href="/sign-in"
+              className={`flex-1 text-center py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                isSignIn
+                  ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+              aria-label="Sign in to your account"
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/sign-up"
+              className={`flex-1 text-center py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                isSignUp
+                  ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+              aria-label="Create a new account"
+            >
+              Sign Up
+            </Link>
           </div>
-          {children}
+
+          {/* Form container */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-2xl blur-xl"></div>
+            <div className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-xl">
+              {children}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="mt-8 text-center">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              By continuing, you agree to our{' '}
+              <Link href="/terms" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                Terms of Service
+              </Link>{' '}
+              and{' '}
+              <Link href="/privacy" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                Privacy Policy
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
     </main>
