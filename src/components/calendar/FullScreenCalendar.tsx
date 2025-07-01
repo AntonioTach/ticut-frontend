@@ -82,6 +82,7 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
           slotMinTime={dayViewHours.start}
           slotMaxTime={dayViewHours.end}
           expandRows
+          eventOverlap={true}
         />
       </div>
       <AppointmentModal

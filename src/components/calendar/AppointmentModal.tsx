@@ -47,7 +47,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       title: '',
       start: '',
       end: '',
-      barberId: currentUser.role === 'barber' ? currentUser.id : '',
+      barberId: currentUser.role === 'barber' ? currentUser.id : (barbers[0]?.id || ''),
       clientName: '',
       notes: '',
     }
@@ -56,6 +56,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   const [isClientModalOpen, setIsClientModalOpen] = useState<boolean>(false);
   const [clientSearch, setClientSearch] = useState<string>('');
   const [isClientListOpen, setIsClientListOpen] = useState<boolean>(false);
+  const [formError, setFormError] = useState<string>('');
 
   const filteredClients = clientSearch
     ? mockClients.filter((client) =>
@@ -80,11 +81,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       title: '',
       start: '',
       end: '',
-      barberId: currentUser.role === 'barber' ? currentUser.id : '',
+      barberId: currentUser.role === 'barber' ? currentUser.id : (barbers[0]?.id || ''),
       clientName: '',
       notes: '',
     });
-  }, [initialData, currentUser]);
+    setFormError('');
+  }, [initialData, currentUser, barbers]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -92,8 +94,17 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.title || !form.start || !form.end || !form.barberId || !form.clientName) return;
-    onSave({ ...form, id: form.id || Math.random().toString(36).substr(2, 9) });
+    const appointmentToSave = {
+      ...form,
+      barberId: currentUser.role === 'barber' ? currentUser.id : form.barberId,
+      id: form.id || Math.random().toString(36).substr(2, 9),
+    };
+    if (!appointmentToSave.title || !appointmentToSave.start || !appointmentToSave.end || !appointmentToSave.barberId || !appointmentToSave.clientName) {
+      setFormError('Please fill in all required fields.');
+      return;
+    }
+    setFormError('');
+    onSave(appointmentToSave);
     onClose();
   };
 
@@ -104,6 +115,11 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
         <h2 className="text-xl font-bold mb-4">{form.id ? 'Edit Appointment' : 'New Appointment'}</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {formError && (
+            <div className="text-red-600 text-sm font-medium bg-red-50 border border-red-200 rounded px-3 py-2">
+              {formError}
+            </div>
+          )}
           <input
             name="title"
             value={form.title}
