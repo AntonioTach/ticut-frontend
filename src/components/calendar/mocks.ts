@@ -2,13 +2,13 @@ import { Barber, Appointment } from './types';
 
 export const barbers: Barber[] = [
   { id: '1', name: 'Owner Admin', role: 'owner' },
-  { id: '2', name: 'Barber John', role: 'barber', color: '#3b82f6' },
-  { id: '3', name: 'Barber Jane', role: 'barber', color: '#10b981' },
-  { id: '4', name: 'Barber Ismael', role: 'barber', color: '#f59e42' },
-  { id: '5', name: 'Barber Juan', role: 'barber', color: '#a855f7' },
-  { id: '6', name: 'Barber Leonardo', role: 'barber', color: '#f43f5e' },
-  { id: '7', name: 'Barber Ximena', role: 'barber', color: '#6366f1' },
-  { id: '8', name: 'Barber Samantha', role: 'barber', color: '#eab308' },
+  { id: '2', name: 'Barber John', role: 'barber', color: '#60a5fa' },
+  { id: '3', name: 'Barber Jane', role: 'barber', color: '#34d399' },
+  { id: '4', name: 'Barber Ismael', role: 'barber', color: '#fdba74' },
+  { id: '5', name: 'Barber Juan', role: 'barber', color: '#a78bfa' },
+  { id: '6', name: 'Barber Leonardo', role: 'barber', color: '#fb7185' },
+  { id: '7', name: 'Barber Ximena', role: 'barber', color: '#818cf8' },
+  { id: '8', name: 'Barber Samantha', role: 'barber', color: '#fde047' },
 ];
 
 export const appointments: Appointment[] = [

@@ -166,12 +166,14 @@
   background: #f3f4f6;
 }
 .fc .fc-event {
-  border-radius: 0.5rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  box-shadow: 0 1px 4px 0 #0001;
-  border: none;
   padding: 2px 6px;
+  border-radius: 0.375rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: none;
+  margin-bottom: 2px;
+  min-height: 1.5rem;
+  cursor: pointer;
 }
 .fc .fc-event-barber-1 {
   background: #3b82f6 !important;
@@ -188,4 +190,24 @@
 .fc .fc-event-barber-other {
   background: #6b7280 !important;
   color: #fff !important;
+}
+.fc .fc-daygrid-day-frame {
+  min-height: 5.5rem;
+  overflow-y: auto;
+}
+.fc .fc-col-header-cell {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 2;
+}
+.fc .fc-more-popover {
+  min-width: 220px;
+  max-width: 320px;
+}
+.fc .fc-daygrid-more-link {
+  font-size: 0.85rem;
+  color: #2563eb;
+  text-decoration: underline;
+  cursor: pointer;
 }

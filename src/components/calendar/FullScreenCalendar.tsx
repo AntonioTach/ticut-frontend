@@ -6,6 +6,8 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { EventClickArg } from '@fullcalendar/core';
 import { Appointment, Barber } from './types';
 import AppointmentModal from './AppointmentModal';
+import { BarberEventContent } from './BarberEventContent';
+import { EventContentArg } from '@fullcalendar/core';
 
 interface DayViewHours {
   start: string; // formato '08:00'
@@ -99,6 +101,16 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
     handleCreateAt(arg.start);
   };
 
+  const renderEventContent = (eventInfo: EventContentArg) => {
+    const color = eventInfo.event.extendedProps.color as string || '#3b82f6';
+    const start = eventInfo.event.startStr;
+    const end = eventInfo.event.endStr;
+    const clientName = eventInfo.event.extendedProps.clientName as string || '';
+    return (
+      <BarberEventContent color={color} start={start} end={end} clientName={clientName} />
+    );
+  };
+
   return (
     <div className="w-[95vw] max-w-7xl h-[90vh] mx-auto my-8 bg-white rounded-2xl shadow-2xl p-4 flex flex-col">
       <div className="mb-4 flex items-center justify-end">
@@ -123,12 +135,16 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
             const barber = barbers.find(b => b.id === a.barberId);
             return {
               id: a.id,
-              title: `${a.title} (${barber?.name || ''})`,
+              title: a.title,
               start: a.start,
               end: a.end,
-              backgroundColor: barber?.color || '#3b82f6',
-              borderColor: barber?.color || '#3b82f6',
-              textColor: '#fff',
+              color: barber?.color || '#3b82f6',
+              extendedProps: {
+                barberName: barber?.name,
+                clientName: a.clientName,
+                notes: a.notes,
+                color: barber?.color,
+              }
             };
           })}
           dateClick={handleDateClick}
@@ -140,6 +156,24 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
           slotMaxTime={dayViewHours.end}
           expandRows
           eventOverlap={true}
+          dayMaxEventRows={3}
+          eventContent={renderEventContent}
+          eventDidMount={info => {
+            info.el.setAttribute('title',
+              `Barbero: ${info.event.extendedProps.barberName}\nCliente: ${info.event.extendedProps.clientName}\nNotas: ${info.event.extendedProps.notes || ''}`
+            );
+            info.el.setAttribute('tabindex', '0');
+            info.el.setAttribute('aria-label', `Cita con ${info.event.extendedProps.clientName} atendida por ${info.event.extendedProps.barberName}`);
+          }}
+          moreLinkContent={arg => (
+            <span
+              className="flex items-center gap-1 text-sm font-bold text-blue-700 underline cursor-pointer"
+              title="Ver todas las citas de este día"
+              aria-label="Ver todas las citas de este día"
+            >
+              +{arg.num} más
+            </span>
+          )}
         />
       </div>
       <AppointmentModal
