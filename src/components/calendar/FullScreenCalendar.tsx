@@ -8,6 +8,7 @@ import { Appointment, Barber } from './types';
 import AppointmentModal from './AppointmentModal';
 import { BarberEventContent } from './BarberEventContent';
 import { EventContentArg } from '@fullcalendar/core';
+import esLocale from '@fullcalendar/core/locales/es';
 
 interface DayViewHours {
   start: string; // formato '08:00'
@@ -113,13 +114,16 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
 
   return (
     <div className="w-[95vw] max-w-7xl h-[90vh] mx-auto my-8 bg-white rounded-2xl shadow-2xl p-4 flex flex-col">
-      <div className="mb-4 flex items-center justify-end">
+      <div className="mb-4 flex items-center justify-between w-full">
+        <div className="flex-1 flex justify-center">
+          <h1 className="text-2xl ml-16 font-bold text-gray-800 tracking-tight">Hunters</h1>
+        </div>
         <button
-          className="py-2 rounded group/btn h-10 flex items-center justify-between px-6 bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:from-green-600 hover:via-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] border-0 relative overflow-hidden"
+          className="px-4 py-2 rounded bg-[#60a5fa] text-white hover:bg-[#3b82f6] transition-colors text-sm font-medium shadow ml-4"
           onClick={handleOpenNewAppointment}
-          aria-label="Nueva Cita"
+          aria-label="Nueva cita"
         >
-          Nueva Cita
+          Nueva cita
         </button>
       </div>
       <div className="flex-1 flex flex-col">
@@ -138,7 +142,9 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
               title: a.title,
               start: a.start,
               end: a.end,
-              color: barber?.color || '#3b82f6',
+              borderColor: barber?.color || '#60a5fa',
+              backgroundColor: '#fff',
+              textColor: '#0f172a',
               extendedProps: {
                 barberName: barber?.name,
                 clientName: a.clientName,
@@ -159,6 +165,19 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
           dayMaxEventRows={3}
           eventContent={renderEventContent}
           eventDidMount={info => {
+            const color = info.event.extendedProps.color || '#60a5fa';
+            info.el.style.borderColor = color;
+            info.el.style.background = '#fff';
+            info.el.style.color = '#0f172a';
+            info.el.addEventListener('mouseenter', () => {
+              info.el.style.background = color;
+              info.el.style.color = '#fff';
+            });
+            info.el.addEventListener('mouseleave', () => {
+              info.el.style.background = '#fff';
+              info.el.style.color = '#0f172a';
+            });
+            // Tooltip accesible
             info.el.setAttribute('title',
               `Barbero: ${info.event.extendedProps.barberName}\nCliente: ${info.event.extendedProps.clientName}\nNotas: ${info.event.extendedProps.notes || ''}`
             );
@@ -174,6 +193,8 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
               +{arg.num} más
             </span>
           )}
+          locales={[esLocale]}
+          locale="es"
         />
       </div>
       <AppointmentModal

@@ -16,6 +16,6 @@ export const BarberEventContent: React.FC<BarberEventContentProps> = ({ color, s
   <div className="flex items-center gap-2">
     <span className="inline-block w-2 h-2 rounded-full" style={{ background: color }} aria-label="Barber color" />
     <span className="font-semibold text-xs">{formatHour(start)}–{formatHour(end)}</span>
-    <span className="truncate text-xs font-bold">{clientName}</span>
+    <span className="truncate text-xs font-bold" style={{ minWidth: 0 }}>{clientName}</span>
   </div>
 ); 
