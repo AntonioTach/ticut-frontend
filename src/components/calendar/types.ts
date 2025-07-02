@@ -2,10 +2,11 @@
 
 export type Role = 'owner' | 'barber';
 
-export interface User {
+export interface Barber {
   id: string;
   name: string;
   role: Role;
+  color?: string;
 }
 
 export interface Appointment {

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { users, appointments as mockAppointments } from './mocks';
-import { User, Appointment } from './types';
+import { barbers, appointments as mockAppointments } from './mocks';
+import { Barber, Appointment } from './types';
 import FullScreenCalendar from './FullScreenCalendar';
 
 /**
@@ -10,7 +10,7 @@ import FullScreenCalendar from './FullScreenCalendar';
  */
 const CalendarPage: React.FC = () => {
   // Simular usuario autenticado (puedes cambiar el índice para probar)
-  const [currentUser, setCurrentUser] = useState<User>(users[0]);
+  const [currentUser, setCurrentUser] = useState<Barber>(barbers[0]);
   const [appointments, setAppointments] = useState<Appointment[]>(mockAppointments);
 
   return (
@@ -30,12 +30,12 @@ const CalendarPage: React.FC = () => {
           <select
             id="user-select"
             value={currentUser.id}
-            onChange={e => setCurrentUser(users.find(u => u.id === e.target.value) || users[0])}
+            onChange={e => setCurrentUser(barbers.find(u => u.id === e.target.value) || barbers[0])}
             className="border border-gray-300 rounded px-1 py-0.5 bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-blue-200 text-xs"
             aria-label="Select user"
             style={{ minWidth: 120 }}
           >
-            {users.map(u => (
+            {barbers.map(u => (
               <option key={u.id} value={u.id}>{u.name} ({u.role})</option>
             ))}
           </select>
@@ -45,7 +45,7 @@ const CalendarPage: React.FC = () => {
       <div className="w-full">
         <FullScreenCalendar
           appointments={currentUser.role === 'owner' ? appointments : appointments.filter(a => a.barberId === currentUser.id)}
-          barbers={currentUser.role === 'owner' ? users.filter(u => u.role === 'barber') : [currentUser]}
+          barbers={currentUser.role === 'owner' ? barbers.filter(u => u.role === 'barber') : [currentUser]}
           currentUser={currentUser}
           onChange={setAppointments}
           dayViewHours={{ start: '08:00', end: '20:00' }}

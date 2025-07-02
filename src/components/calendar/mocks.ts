@@ -1,14 +1,14 @@
-import { User, Appointment } from './types';
+import { Barber, Appointment } from './types';
 
-export const users: User[] = [
+export const barbers: Barber[] = [
   { id: '1', name: 'Owner Admin', role: 'owner' },
-  { id: '2', name: 'Barber John', role: 'barber' },
-  { id: '3', name: 'Barber Jane', role: 'barber' },
-  { id: '4', name: 'Barber Ismael', role: 'barber' },
-  { id: '5', name: 'Barber Juan', role: 'barber' },
-  { id: '6', name: 'Barber Leonardo', role: 'barber' },
-  { id: '7', name: 'Barber Ximena', role: 'barber' },
-  { id: '8', name: 'Barber Samantha', role: 'barber' },
+  { id: '2', name: 'Barber John', role: 'barber', color: '#3b82f6' },
+  { id: '3', name: 'Barber Jane', role: 'barber', color: '#10b981' },
+  { id: '4', name: 'Barber Ismael', role: 'barber', color: '#f59e42' },
+  { id: '5', name: 'Barber Juan', role: 'barber', color: '#a855f7' },
+  { id: '6', name: 'Barber Leonardo', role: 'barber', color: '#f43f5e' },
+  { id: '7', name: 'Barber Ximena', role: 'barber', color: '#6366f1' },
+  { id: '8', name: 'Barber Samantha', role: 'barber', color: '#eab308' },
 ];
 
 export const appointments: Appointment[] = [

@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { EventClickArg } from '@fullcalendar/core';
-import { Appointment, User } from './types';
+import { Appointment, Barber } from './types';
 import AppointmentModal from './AppointmentModal';
 
 interface DayViewHours {
@@ -14,8 +14,8 @@ interface DayViewHours {
 
 interface FullScreenCalendarProps {
   appointments: Appointment[];
-  barbers: User[];
-  currentUser: User;
+  barbers: Barber[];
+  currentUser: Barber;
   onChange: (appointments: Appointment[]) => void;
   dayViewHours?: DayViewHours;
 }
@@ -119,13 +119,18 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay',
           }}
-          events={appointments.map(a => ({
-            id: a.id,
-            title: `${a.title} (${barbers.find(b => b.id === a.barberId)?.name || ''})`,
-            start: a.start,
-            end: a.end,
-            className: `fc-event-barber-${barbers.findIndex(b => b.id === a.barberId) + 1 || 'other'}`,
-          }))}
+          events={appointments.map(a => {
+            const barber = barbers.find(b => b.id === a.barberId);
+            return {
+              id: a.id,
+              title: `${a.title} (${barber?.name || ''})`,
+              start: a.start,
+              end: a.end,
+              backgroundColor: barber?.color || '#3b82f6',
+              borderColor: barber?.color || '#3b82f6',
+              textColor: '#fff',
+            };
+          })}
           dateClick={handleDateClick}
           eventClick={handleEventClick}
           selectable={true}

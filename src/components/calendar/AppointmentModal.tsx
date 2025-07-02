@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Appointment, User } from './types';
+import { Appointment, Barber } from './types';
 import { ClientRegistrationModal } from '../dashboard/ClientRegistrationModal';
 import { mockClients } from './mocks';
 
@@ -9,8 +9,8 @@ interface AppointmentModalProps {
   onClose: () => void;
   onSave: (appointment: Appointment) => void;
   initialData?: Appointment | null;
-  barbers: User[];
-  currentUser: User;
+  barbers: Barber[];
+  currentUser: Barber;
 }
 
 /**
@@ -201,7 +201,9 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             >
               <option value="">Select Barber</option>
               {barbers.map((barber) => (
-                <option key={barber.id} value={barber.id}>{barber.name}</option>
+                <option key={barber.id} value={barber.id}>
+                  {barber.name}
+                </option>
               ))}
             </select>
           )}
