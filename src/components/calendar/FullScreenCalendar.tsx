@@ -102,6 +102,11 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
     handleCreateAt(arg.start);
   };
 
+  const handleDelete = (appointment: Appointment) => {
+    onChange(appointments.filter(a => a.id !== appointment.id));
+    setModalOpen(false);
+  };
+
   const renderEventContent = (eventInfo: EventContentArg) => {
     const color = eventInfo.event.extendedProps.color as string || '#3b82f6';
     const start = eventInfo.event.startStr;
@@ -212,6 +217,7 @@ const FullScreenCalendar: React.FC<FullScreenCalendarProps> = ({
         } : null)}
         barbers={barbers}
         currentUser={currentUser}
+        onDelete={handleDelete}
       />
     </div>
   );

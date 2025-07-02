@@ -11,6 +11,7 @@ interface AppointmentModalProps {
   initialData?: Appointment | null;
   barbers: Barber[];
   currentUser: Barber;
+  onDelete?: (appointment: Appointment) => void;
 }
 
 /**
@@ -23,6 +24,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   initialData,
   barbers,
   currentUser,
+  onDelete,
 }) => {
   const [form, setForm] = useState<Appointment>(
     initialData || {
@@ -40,6 +42,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   const [clientSearch, setClientSearch] = useState<string>('');
   const [isClientListOpen, setIsClientListOpen] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const filteredClients = clientSearch
     ? mockClients.filter((client) =>
@@ -53,7 +56,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   };
 
   const handleClientInputBlur = () => {
-    // Timeout para permitir click en la lista
     setTimeout(() => setIsClientListOpen(false), 120);
   };
 
@@ -95,7 +97,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Appointment Modal">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
         <h2 className="text-xl font-bold mb-4">{form.id ? 'Edit Appointment' : 'New Appointment'}</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {formError && (
@@ -143,12 +145,14 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                           setForm({ ...form, clientName: client.name });
                           setClientSearch(client.name);
                           setIsClientListOpen(false);
+                          setTimeout(() => setIsClientListOpen(false), 0);
                         }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             setForm({ ...form, clientName: client.name });
                             setClientSearch(client.name);
                             setIsClientListOpen(false);
+                            setTimeout(() => setIsClientListOpen(false), 0);
                           }
                         }}
                         aria-label={`Select ${client.name}`}
@@ -216,15 +220,48 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             aria-label="Notes"
           />
           <div className="flex justify-end gap-2 mt-4">
+            {initialData?.id && onDelete && (
+              <button
+                type="button"
+                className="px-4 py-2 rounded bg-red-100 text-red-700 hover:bg-red-200 font-semibold mr-auto"
+                onClick={() => setShowDeleteConfirm(true)}
+              >
+                Eliminar
+              </button>
+            )}
             <button type="button" onClick={onClose} className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300" aria-label="Cancel">Cancel</button>
             <button type="submit" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700" aria-label="Save Appointment">Save</button>
           </div>
         </form>
+        <ClientRegistrationModal
+          isOpen={isClientModalOpen}
+          onClose={() => setIsClientModalOpen(false)}
+        />
+        {showDeleteConfirm && (
+          <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/30">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xs flex flex-col items-center">
+              <p className="text-lg font-semibold text-gray-800 mb-4 text-center">¿Estás seguro de que deseas eliminar esta cita?</p>
+              <div className="flex gap-4 mt-2">
+                <button
+                  className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium"
+                  onClick={() => setShowDeleteConfirm(false)}
+                >
+                  Cancelar
+                </button>
+                <button
+                  className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 font-medium"
+                  onClick={() => {
+                    setShowDeleteConfirm(false);
+                    onDelete && onDelete(form);
+                  }}
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-      <ClientRegistrationModal
-        isOpen={isClientModalOpen}
-        onClose={() => setIsClientModalOpen(false)}
-      />
     </div>
   );
 };
